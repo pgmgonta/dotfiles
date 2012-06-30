@@ -21,18 +21,11 @@ if has('vim_starting')
   call neobundle#rc(expand('~/.vim/bundle/'))
 endif
 
-"set rtp+=~/.vim/vundle.git/ 
-"call vundle#rc() 
-"NeoBundle 'gmarik/vundle'
-"NeoBundle 'Shougo/neobundle'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'hail2u/vim-css3-syntax.git'
-
-"NeoBundle 'rails.vim'
-"NeoBundle 'ruby.vim'
 
 syntax on
 filetype on
@@ -59,10 +52,6 @@ let g:neocomplcache_enable_at_startup=1
 set laststatus=2 
 set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\\%l/%L\ (%P)%m%=%{strftime(\"%Y/%m/%d\ %H:%M\")} 
 
-"rails.vim
-let g:rails_level=4
-let g:rails_default_file="app/controllers/application.rb"
-
 "Ruby omni complete
 set omnifunc=rubycomplete#Complete
 let g:rubycomplete_buffer_loading=1
@@ -77,6 +66,3 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType ruby,eruby setlocal omnifunc=rubycomplete#Complete
-autocmd FileType ruby set dictionary=~/.vim/syntax/rails.vim 
-
-
