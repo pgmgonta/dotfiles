@@ -43,9 +43,9 @@ imap <C-Space> <C-x><C-o>
 "use delete key
 set t_kD=^?
 
-highlight Pmenu ctermbg=8 guibg=#606060
-highlight PmenuSel ctermbg=12 guibg=SlateBlue
-highlight PmenuSbar ctermbg=0 guibg=#404040
+hi Pmenu     ctermbg=8  
+hi PmenuSel  ctermfg=0 ctermbg=7 
+hi PmenuSbar ctermbg=1
 
 let g:neocomplcache_enable_at_startup=1
 
