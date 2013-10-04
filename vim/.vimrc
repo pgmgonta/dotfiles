@@ -27,6 +27,12 @@ NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'hail2u/vim-css3-syntax.git'
+NeoBundle 'kana/vim-altr'
+NeoBundle 'mattn/zencoding-vim'
+NeoBundle 'derekwyatt/vim-scala'
+NeoBundle 'project.tar.gz'
+"NeoBundle 'rails.vim'
+NeoBundle 'The-NERD-tree'
 
 syntax on
 filetype on
@@ -65,5 +71,24 @@ let g:rubycomplete_include_objectspace=1
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType ruby,eruby setlocal omnifunc=rubycomplete#Complete
+
+"vim-altr{{{
+nmap <F3> <Plug>(altr-forward)
+nmap <F2> <Plug>(altr-back)
+
+call altr#define('%.rb', 'spec/%_spec.rb')
+call altr#define('app/models/%.rb', 'spec/models/%_spec.rb', 'spec/factories/%s.rb')
+call altr#define('app/controllers/%.rb', 'spec/controllers/%_spec.rb')
+call altr#define('app/helpers/%.rb', 'spec/helpers/%_spec.rb')
+call altr#define('spec/routing/%_spec.rb', 'config/routes.rb')
+"}}}
+
+function! RSpecSyntax()
+  hi def link rubyRailsTestMethod             Function
+  syn keyword rubyRailsTestMethod describe context it its specify shared_examples_for it_should_behave_like before after around subject fixtures controller_name helper_name
+  syn match rubyRailsTestMethod '\<let\>!\='
+  syn keyword rubyRailsTestMethod violated pending expect double mock mock_model stub_model
+  syn match rubyRailsTestMethod '\.\@<!\<stub\>!\@!'
+endfunction
+autocmd BufReadPost *_spec.rb call RSpecSyntax()
