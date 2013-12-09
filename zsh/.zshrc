@@ -1,6 +1,6 @@
 export LSCOLORS=exfxcxdxbxegedabagacad
 
-export PATH=/usr/local/bin/:$PATH:/usr/local/sbin/
+export PATH=/usr/local/bin/:$PATH:/usr/local/sbin/:~/packer/bin
 
 #history setting
 HISTFILE=~/.histfile
@@ -27,6 +27,14 @@ precmd(){
   psvar=()
   LANG=en_US.UTF-8 vcs_info
   [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+
+  #Railsコマンド
+  TMP_PRE_RAILS_CMD=`history | tail -n 1 | grep  "rails\|rake" | sed -e "s/^\\s[0-9]*//"`
+  if [ -n "$TMP_PRE_RAILS_CMD" ]; then
+    PRC2=$PRC1
+    PRC1=$TMP_PRE_RAILS_CMD
+    TMP_PRE_RAILS_CMD=""
+  fi
 }
 
 prompt_bar_left_self="[%{%F{cyan}%}%{%B%}%n%{%b%}%{%f%}]"
@@ -39,7 +47,8 @@ prompt_left="(=°ω°)ﾉ %(1j,(%j),)%{%B%}%#%{%b%} "
 
 PROMPT="${prompt_bar_left}"$'\n'"${prompt_left}"
 
-alias ls='ls -laG'
+#alias ls='ls -laG'
+alias ll='ls -laG'
 alias be='bundle exec'
 alias g='git'
 alias cls='clear'
@@ -50,3 +59,6 @@ alias rm='rm -i'
 alias sencha='/Users/tatsuya/bin/Sencha/Cmd/3.1.1.274/sencha --sdk-path /Applications/SenchaSDKTools-2.0.0-beta3/'
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
+
+export EDITOR=vim
+export PATH=$PATH:~/bin/maven/bin/
