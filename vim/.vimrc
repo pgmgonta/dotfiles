@@ -13,26 +13,48 @@ set nowrap
 "setup
 "mkdir -p ~/.vim/bundle
 "git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
-set nocompatible               " be iMproved
-filetype off                   " required!
-filetype plugin indent off     " required!
 
-if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
-  call neobundle#rc(expand('~/.vim/bundle/'))
+if &compatible
+  set nocompatible               " Be iMproved
 endif
 
+set runtimepath+=~/.vim/bundle/neobundle.vim/
+call neobundle#begin(expand('~/.vim/bundle/'))
+NeoBundleFetch 'Shougo/neobundle.vim'
+
 NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 'tpope/vim-rails'
-NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'hail2u/vim-css3-syntax.git'
+NeoBundle 'Shougo/Unite.vim'
+NeoBundle 'thinca/vim-quickrun'
+
+"Project
 NeoBundle 'kana/vim-altr'
-NeoBundle 'mattn/zencoding-vim'
 NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'project.tar.gz'
-"NeoBundle 'rails.vim'
 NeoBundle 'The-NERD-tree'
+
+"Ruby
+NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'tpope/vim-rails'
+NeoBundle 'rails.vim'
+
+"JavaScript/CSS
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'hail2u/vim-css3-syntax.git'
+NeoBundle 'othree/javascript-libraries-syntax.vim'
+
+"Gradle
+NeoBundle 'tfnico/vim-gradle'
+NeoBundle 'thinca/vim-quickrun'
+
+"Python
+"cd ~/.vim/bundle/jedi-vim  git submodule update --init
+NeoBundle 'davidhalter/jedi-vim'
+NeoBundle 'hynek/vim-python-pep8-indent'
+NeoBundle 'jmcantrell/vim-virtualenv'
+
+call neobundle#end()
+filetype plugin indent on
+NeoBundleCheck
 
 syntax on
 filetype on
@@ -49,29 +71,37 @@ imap <C-Space> <C-x><C-o>
 "use delete key
 set t_kD=^?
 
-hi Pmenu     ctermbg=8  
-hi PmenuSel  ctermfg=0 ctermbg=7 
-hi PmenuSbar ctermbg=1
+"hi Pmenu     ctermbg=8  
+"hi PmenuSel  ctermfg=0 ctermbg=7 
+"hi PmenuSbar ctermbg=1
 
 let g:neocomplcache_enable_at_startup=1
-
-"status line
 set laststatus=2 
 set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\\%l/%L\ (%P)%m%=%{strftime(\"%Y/%m/%d\ %H:%M\")} 
+ 
+let g:used_javascript_libs = 'underscore,backbone,angularjs'
+ 
+if has("autocmd")
+  
+  autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
+  autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading=1
+  autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global=1
 
-"Ruby omni complete
-set omnifunc=rubycomplete#Complete
-let g:rubycomplete_buffer_loading=1
-let g:rubycomplete_rails=1
-let g:rubycomplete_classes_in_global=1
-let g:rubycomplete_include_object=1
-let g:rubycomplete_include_objectspace=1
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 
-"set omnifunc
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType ruby,eruby setlocal omnifunc=rubycomplete#Complete
+  autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
+  autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
+  autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 1
+  autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
+  autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 1
+endif
+
+hi Pmenu ctermbg=7
+hi PmenuSel ctermbg=4
+hi PmenuSbar ctermbg=2
+hi PmenuThumb ctermfg=3
 
 "vim-altr{{{
 nmap <F3> <Plug>(altr-forward)
@@ -92,3 +122,5 @@ function! RSpecSyntax()
   syn match rubyRailsTestMethod '\.\@<!\<stub\>!\@!'
 endfunction
 autocmd BufReadPost *_spec.rb call RSpecSyntax()
+
+call pathogen#infect()

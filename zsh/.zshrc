@@ -1,6 +1,6 @@
 export LSCOLORS=exfxcxdxbxegedabagacad
 
-export PATH=/usr/local/bin/:$PATH:/usr/local/sbin/:~/packer/bin
+export PATH=/usr/local/bin/:$PATH:/usr/local/sbin/:~/packer/bin:~/bin:~/anaconda/bin
 
 #history setting
 HISTFILE=~/.histfile
@@ -57,8 +57,26 @@ alias bjrails='bundle exec jruby -X-C --client -S rails '
 alias bjrake='bundle exec jruby -X-C --client -S rake '
 alias rm='rm -i'
 alias sencha='/Users/tatsuya/bin/Sencha/Cmd/3.1.1.274/sencha --sdk-path /Applications/SenchaSDKTools-2.0.0-beta3/'
+
+#rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
+#pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
 export EDITOR=vim
 export PATH=$PATH:~/bin/maven/bin/
+
+export PATH=$PATH:/Applications/VMware\ OVF\ Tool/
+
+export SBT_OPTS="-Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=384M"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/tatsuya/.sdkman"
+[[ -s "/Users/tatsuya/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/tatsuya/.sdkman/bin/sdkman-init.sh"
+
+eval "$(pyenv virtualenv-init -)"
+
